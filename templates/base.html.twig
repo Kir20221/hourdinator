@@ -1,19 +1,42 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}{% endblock %}</title>
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+            <!-- Global stylesheets -->
+            <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+            <link href="{{ asset('assets/limitless/global_assets/css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('assets/limitless/layout_1/LTR/default/full/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('assets/limitless/layout_1/LTR/default/full/assets/css/bootstrap_limitless.min.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('assets/limitless/layout_1/LTR/default/full/assets/css/layout.min.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('assets/limitless/layout_1/LTR/default/full/assets/css/components.min.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('assets/limitless/layout_1/LTR/default/full/assets/css/colors.min.css') }}" rel="stylesheet" type="text/css">
+            <!-- /global stylesheets -->
         {% endblock %}
 
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+            <!-- Core JS files -->
+            <script src="{{ asset('assets/limitless/global_assets/js/main/jquery.min.js') }}"></script>
+            <script src="{{ asset('assets/limitless/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
+            <script src="{{ asset('assets/limitless/global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
+            <!-- /core JS files -->
         {% endblock %}
+
+        <script src="{{ asset('assets/limitless/layout_1/LTR/default/full/assets/js/app.js') }}"></script>
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% include ('header.html.twig') %}
+
+        <!-- Page content -->
+        <div class="page-content">
+
+            {% include ('sidebar.html.twig') %}
+
+            {% block body %}{% endblock %}
+        </div>
     </body>
 </html>

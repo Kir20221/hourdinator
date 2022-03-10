@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ClientCategorie index{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Theme JS files -->
+	<script src="{{ asset('assets/limitless/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+	<script src="{{ asset('assets/limitless/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/limitless/global_assets/js/demo_pages/datatables_basic.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<!-- Main content -->
+		<div class="content-wrapper">
+
+			<!-- Page header -->
+			<div class="page-header page-header-light">
+				<div class="page-header-content header-elements-md-inline">
+					<div class="page-title d-flex">
+						<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Catégories client</h4>
+						<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+					</div>
+
+					<div class="header-elements d-none">
+						<div class="d-flex justify-content-center">
+							<a href="{{ path('app_client_categorie_new') }}" class="btn btn-link btn-float text-default"><i class="icon-user-plus text-primary"></i></a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- /page header -->
+
+
+			<!-- Content area -->
+			<div class="content">
+                <!-- Basic datatable -->
+				<div class="card">
+                    <table class="table datatable-basic">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Code</th>
+                                <th>Nom</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for client_categorie in client_categories %}
+                            <tr>
+                                <td>{{ client_categorie.id }}</td>
+                                <td>{{ client_categorie.code }}</td>
+                                <td>{{ client_categorie.nom }}</td>
+                                <td>
+                                    <a href="{{ path('app_client_categorie_show', {'id': client_categorie.id}) }}">Voir</a>
+                                    <a href="{{ path('app_client_categorie_edit', {'id': client_categorie.id}) }}">Modifier</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+{% endblock %}

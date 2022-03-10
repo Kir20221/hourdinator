@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ClientCategorie{% endblock %}
+
+{% block body %}
+    <h1>ClientCategorie</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ client_categorie.id }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ client_categorie.code }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ client_categorie.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_client_categorie_index') }}">back to list</a>
+
+    <a href="{{ path('app_client_categorie_edit', {'id': client_categorie.id}) }}">edit</a>
+
+    {{ include('client_categorie/_delete_form.html.twig') }}
+{% endblock %}
