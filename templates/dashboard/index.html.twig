@@ -2,6 +2,220 @@
 
 {% block title %}Dashboard{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/limitless/global_assets/js/plugins/visualization/echarts/echarts.min.js') }}"></script>
+
+    <script>
+    // Setup module
+// ------------------------------
+
+var EchartsPiesDonuts = function() {
+
+
+    //
+    // Setup module components
+    //
+
+    // Pie and donut charts
+    var _piesDonutsExamples = function() {
+        if (typeof echarts == 'undefined') {
+            console.warn('Warning - echarts.min.js is not loaded.');
+            return;
+        }
+
+        // Define elements
+        var pie_basic_element = document.getElementById('pie_basic');
+
+        //
+        // Charts configuration
+        //
+
+        // Basic pie chart
+        if (pie_basic_element) {
+
+            // Initialize chart
+            var pie_basic = echarts.init(pie_basic_element);
+
+
+            //
+            // Chart config
+            //
+
+            // Options
+            pie_basic.setOption({
+
+                // Colors
+                color: [
+                    '#2ec7c9','#b6a2de','#5ab1ef','#ffb980','#d87a80',
+                    '#8d98b3','#e5cf0d','#97b552','#95706d','#dc69aa',
+                    '#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050',
+                    '#59678c','#c9ab00','#7eb00a','#6f5553','#c14089'
+                ],
+
+                // Global text styles
+                textStyle: {
+                    fontFamily: 'Roboto, Arial, Verdana, sans-serif',
+                    fontSize: 13
+                },
+
+                // Add title
+                title: {
+                    text: 'Stats commerciales',
+                    subtext: 'par client',
+                    left: 'center',
+                    textStyle: {
+                        fontSize: 17,
+                        fontWeight: 500
+                    },
+                    subtextStyle: {
+                        fontSize: 12
+                    }
+                },
+
+                // Add tooltip
+                tooltip: {
+                    trigger: 'item',
+                    backgroundColor: 'rgba(0,0,0,0.75)',
+                    padding: [10, 15],
+                    textStyle: {
+                        fontSize: 13,
+                        fontFamily: 'Roboto, sans-serif'
+                    },
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                },
+
+                // Add legend
+                legend: {
+                    orient: 'vertical',
+                    top: 'center',
+                    left: 0,
+                    data: [
+                        {% for client in statsClients %}'{{ client.nom }}'{% if not loop.last %},{% endif %}{% endfor %}],
+                    itemHeight: 8,
+                    itemWidth: 8
+                },
+
+                // Add series
+                series: [{
+                    name: 'Browsers',
+                    type: 'pie',
+                    radius: '70%',
+                    center: ['50%', '57.5%'],
+                    itemStyle: {
+                        normal: {
+                            borderWidth: 1,
+                            borderColor: '#fff'
+                        }
+                    },
+                    data: [
+                        {% for client in statsClients %}
+                            {value: {{ client.montantht}}, name: '{{ client.nom}}'}{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    ]
+                }]
+            });
+        }
+
+        //
+        // Resize charts
+        //
+
+        // Resize function
+        var triggerChartResize = function() {
+            pie_basic_element && pie_basic.resize();
+        };
+
+        // On sidebar width change
+        $(document).on('click', '.sidebar-control', function() {
+            setTimeout(function () {
+                triggerChartResize();
+            }, 0);
+        });
+
+        // On window resize
+        var resizeCharts;
+        window.onresize = function () {
+            clearTimeout(resizeCharts);
+            resizeCharts = setTimeout(function () {
+                triggerChartResize();
+            }, 200);
+        };
+    };
+
+
+    //
+    // Return objects assigned to module
+    //
+
+    return {
+        init: function() {
+            _piesDonutsExamples();
+        }
+    }
+}();
+
+
+// Initialize module
+// ------------------------------
+
+document.addEventListener('DOMContentLoaded', function() {
+    EchartsPiesDonuts.init();
+});
+
+    </script>
+
+{% endblock %}
+
 {% block body %}
-Ceci est le dashboard
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Dashboard</h4>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="d-flex justify-content-center">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /page header -->
+
+    <!-- Content area -->
+    <div class="content">
+        <!-- Pie and donut -->
+        <div class="row">
+            <div class="col-xl-6">
+
+                <!-- Basic pie -->
+                <div class="card">
+                    <div class="card-header header-elements-inline">
+                        <h5 class="card-title">Mon zoli camembert</h5>
+                        <div class="header-elements">
+                            <div class="list-icons">
+                                <a class="list-icons-item" data-action="collapse"></a>
+                                <a class="list-icons-item" data-action="reload"></a>
+                                <a class="list-icons-item" data-action="remove"></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <div class="chart has-fixed-height" id="pie_basic"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /basic pie -->
+
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

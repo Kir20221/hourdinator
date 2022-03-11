@@ -45,6 +45,21 @@ class ClientRepository extends ServiceEntityRepository
         }
     }
 
+    public function getStatsCommandes()
+    {
+        $conn= $this->getEntityManager()->getConnection();
+        $sql="
+            SELECT client.id, client.code, client.nom, client.prenom, sum(montant_ht) montantht, count(*) combien
+            FROM client
+                inner join commande on client.id=commande.client_id
+            GROUP BY client.id, client.code, client.nom";
+        $stmt = $conn->executeQuery($sql); 
+
+        $resultat=$stmt->fetchAll(); 
+        return $resultat;
+    }
+
+
     // /**
     //  * @return Client[] Returns an array of Client objects
     //  */
