@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Commande{% endblock %}
+
+{% block body %}
+<div class="content-wrapper">
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Commandes / Nouveau</h4>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="d-flex justify-content-center">
+                    <a href="{{ path('app_commande_index') }}" class="btn btn-link btn-float text-default"><i class="icon-user-plus text-primary"></i><span>Liste</span></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /page header -->
+
+    <!-- Content area -->
+    <div class="content">
+        <div class="row">
+            <div class="col-md-7">
+
+                <div class="card">
+
+                    <div class="card-body">
+                        {{ include('commande/_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+
+                <div class="card">
+                    <div class="card-img-actions mx-1 mt-1">
+                        <img class="card-img img-fluid" src="{{ asset('assets/images/commande-en-ligne.png') }}" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
