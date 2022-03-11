@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Form\ClientType;
 use App\Repository\ClientRepository;
+use App\Service\HourdinaCode;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,13 +29,16 @@ class ClientController extends AbstractController
     /**
      * @Route("/new", name="app_client_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, ClientRepository $clientRepository): Response
+    public function new(Request $request, ClientRepository $clientRepository, HourdinaCode $hourdinaCode): Response
     {
         $client = new Client();
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $client->setCode($hourdinaCode->getNewCode('client',$client));
+
             $clientRepository->add($client);
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
         }

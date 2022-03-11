@@ -36,6 +36,11 @@ class HourdinaCode
             $this->code = 'ART' . $entite->getCategorie()->getCode() . $numero;
         }
 
+        if($typeentite=='commande'){
+            $numero = substr('00000' . $compteur->getNumeroActuel(),-5);
+            $this->code = 'COM' . $numero;
+        }
+
         return $this->code;
     }
 
